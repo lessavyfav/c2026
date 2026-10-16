@@ -55,6 +55,7 @@ final class AppModel: ObservableObject {
     var selectedItems: [C6Item] { items.filter { selection.contains($0.id) } }
 
     init() {
+        Self.migrateDefaults()
         C6Item.audioDescriber = { _, bytes in AudioFile.describe(bytes) }
         restoreFilesIfNeeded()
         do {
@@ -64,6 +65,16 @@ final class AppModel: ObservableObject {
             endpointsChanged()
         } catch {
             lastError = "\(error)"
+        }
+    }
+
+    /// Settings moved when the bundle identifier changed from `local.c2026` to
+    /// `com.lessavyfav.c2026`: copy them over once.
+    private static func migrateDefaults() {
+        let d = UserDefaults.standard
+        guard d.object(forKey: "settings") == nil, let old = UserDefaults(suiteName: "local.c2026") else { return }
+        for key in ["settings", "reloadList", "itemOptions"] {
+            if let v = old.object(forKey: key) { d.set(v, forKey: key) }
         }
     }
 

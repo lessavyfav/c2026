@@ -88,9 +88,20 @@ Memory is estimated as **2 bytes per frame, whatever the bit depth** — consist
 
 ```bash
 scripts/build-app.sh                 # → build/C2026.app (Apple Silicon); add --universal for Intel too
+scripts/build-app.sh --release       # universal, Developer ID signed + notarized → build/C2026-<version>.zip
 scripts/test.sh                      # runs the test suite (Swift Testing)
 scripts/make-icon.sh <art.png>       # rebuilds Resources/AppIcon.icns from square artwork
 ```
+
+`--release` makes a zip anyone can download and open without security warnings. It needs, once per Mac, a **Developer ID Application** certificate in the login keychain (Apple Developer account → Certificates) and notarization credentials stored under the profile name `C2026`:
+
+```bash
+xcrun notarytool store-credentials C2026 --apple-id <your Apple ID> --team-id <your Team ID>
+```
+
+(it prompts for an app-specific password from appleid.apple.com and keeps it in the keychain).
+
+Ad-hoc builds (without `--release`) run on the Mac that built them; on other Macs they need **System Settings → Privacy & Security → Open Anyway** the first time.
 
 The command-line tool (`swift build --product c2026`, then `.build/debug/c2026`) does most of what the app does, which is handy for scripting:
 
