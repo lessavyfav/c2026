@@ -68,7 +68,7 @@ public enum Resampler {
 /// What a Machinedrum will play back: mono, at the rate sent, at 12-bit resolution.
 public enum MachinedrumPreview {
     /// How a device steps through a sample whose content rate is below its output rate (a 22 kHz
-    /// sample, or a 2× sample at pitch −12). The Machinedrum's method isn't documented; compare
+    /// sample, or a 2× sample at PTCH −36, one octave down). The Machinedrum's method isn't documented; compare
     /// by ear and pick the closer one.
     public enum Interpolation: String, Codable, CaseIterable, Sendable {
         case linear = "Smooth (linear)"
@@ -104,7 +104,7 @@ public enum MachinedrumPreview {
     }
 
     /// A 16-bit mono WAV of `sample` as the device will play it.
-    /// - `octaveDown`: a 2× sample played with the device's pitch at −12 (its content rate is half
+    /// - `octaveDown`: a 2× sample played an octave down (Machinedrum PTCH −36; its content rate is half
     ///   the header rate).
     /// - `emulateDevice`: step through the content at the device's 44.1 kHz output with
     ///   `interpolation` when the content rate divides it (22.05 kHz, 11.025 kHz…), and quantise to

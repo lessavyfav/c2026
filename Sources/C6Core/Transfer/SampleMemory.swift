@@ -106,7 +106,7 @@ public extension C6Item {
 
     /// What the play button plays: for samples, the device's view of it — mono, at the send rate,
     /// 12-bit when `asMachinedrum`, and for 2× samples played back an octave down (as with the
-    /// device's pitch at −12) using `interpolation`; for sample dumps, their first sample.
+    /// Machinedrum's PTCH at −36) using `interpolation`; for sample dumps, their first sample.
     func previewAudio(asMachinedrum: Bool, interpolation: MachinedrumPreview.Interpolation = .hold) -> [UInt8]? {
         if isAudio {
             let double = canDoubleSpeed && doubleSpeed

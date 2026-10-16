@@ -23,7 +23,7 @@ public struct C6Item: Identifiable, Equatable, Sendable {
     /// Send at 22.05 kHz instead of the file's rate (half the memory on a 44.1 kHz file).
     public var halfRate = false
     /// Send at double speed: half the frames, original rate in the header — the device plays it an
-    /// octave up until its pitch is set to −12 (half the memory; combines with `halfRate`).
+    /// octave up until its pitch is set an octave down — PTCH −36 on a Machinedrum (half the memory; combines with `halfRate`).
     public var doubleSpeed = false
     public var loopMode: LoopMode = .file
     public var stereoMode: StereoMode = .mix

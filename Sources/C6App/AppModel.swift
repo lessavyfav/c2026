@@ -393,7 +393,7 @@ final class AppModel: ObservableObject {
                             self.setStatus(item.id, .sent)
                             self.noteSent(item, toSampleNumber: number)
                             if item.canDoubleSpeed && item.doubleSpeed {
-                                self.append("Slot \(number + 1) holds \(item.name) at 2× speed: set that track's PTCH to −12 on the MD to play it at its original speed")
+                                self.append("Slot \(number + 1) holds \(item.name) at 2× speed: set that track's PTCH to −36 on the MD to play it at its original speed")
                             }
                             self.append("Sent \(item.name) to slot \(number + 1) in \(Format.duration(secs)) at \(speed.label)"
                                         + " (\(r.packetsSent) packets, \(r.resends) resent\(r.openLoopSamples > 0 ? ", no handshake replies" : ""))")

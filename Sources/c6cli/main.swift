@@ -302,7 +302,7 @@ case "send-sample":
     guard var item = try? C6Item.load(url: url) else { fail("Can't read \(url.path)") }
     item.stereoMode = stereo; item.halfRate = args.contains("--22k"); item.doubleSpeed = args.contains("--2x")
     guard var sample = item.sdsSampleToSend(name: base, maxBits: args.contains("--keep-bits") ? nil : 16) else { fail("Not a sample") }
-    if item.doubleSpeed { print("2× speed: set the track's PTCH to −12 on the MD") }
+    if item.doubleSpeed { print("2× speed: set the track's PTCH to −36 on the MD (one octave down)") }
     sample.mdName = mdName ?? (spsName ? MDName.suggest(forFileName: url.lastPathComponent) : nil)
     if let n = sample.mdName { print("MD name: \(MDName.normalize(n))") }
     let (conn, tm1) = openConnection()

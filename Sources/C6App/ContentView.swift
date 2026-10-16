@@ -375,7 +375,7 @@ struct ItemRow: View {
     }
 
     /// 44100 → "44.1k", 48000 → "48k", 22050 → "22k", 11025 → "11k".
-    /// "2×": send at double speed (half the memory; PTCH −12 on the MD).
+    /// "2×": send at double speed (half the memory; PTCH −36 on the MD).
     @ViewBuilder private var doubleToggle: some View {
         if item.canDoubleSpeed {
             control(onToggleDouble) {
@@ -386,8 +386,8 @@ struct ItemRow: View {
                     .foregroundStyle(item.doubleSpeed ? Color.orange : Color.secondary)
             }
             .help(item.doubleSpeed
-                  ? "Sent at double speed — half the memory. Set the track's PTCH to −12 on the MD. Click to send at normal speed."
-                  : "Send at double speed: half the memory; set the track's PTCH to −12 on the MD to compensate. The preview plays it as it will sound there.")
+                  ? "Sent at double speed — half the memory. Set the track's PTCH to −36 on the MD (one octave down). Click to send at normal speed."
+                  : "Send at double speed: half the memory; set the track's PTCH to −36 on the MD (one octave down) to compensate. The preview plays it as it will sound there.")
         }
     }
 
