@@ -54,7 +54,7 @@ Every WAV/AIFF row has three controls before its name:
 |---|---|
 | **▶** | Plays the sample **as the Machinedrum will**: mono (per the Stereo button), 12-bit, at the rate and speed it will be sent. Space plays/stops the selection. |
 | **44.1k / 22k** | Click to send the sample at **22.05 kHz** instead of its own rate. It's resampled with an anti-aliasing filter, uses **half the memory**, and the MD plays it at the right pitch — the cost is the top end above ~11 kHz. |
-| **2×** | Click to send the sample at **double speed**: half the frames, original rate in the header. Uses **half the memory**. On the Machinedrum, set that track's **PTCH to −12** to play it at its original speed (C2026's log reminds you after sending). |
+| **2×** | Click to send the sample at **double speed**: half the frames, original rate in the header. Uses **half the memory**. On the Machinedrum, set that track's **PTCH to −36** to play it at its original speed (C2026's log reminds you after sending). |
 
 - **22k and 2× combine** for a quarter of the memory (the most lo-fi option).
 - The **MD memory** column (e.g. `MD 26 kB`) and the selection's fit check update as you toggle.
