@@ -13,6 +13,28 @@ A native macOS rebuild of Elektron's **C6 SysEx Tool** for today's Macs: SysEx a
 >
 > C2026 is not affiliated with or endorsed by Elektron. "C6", "Machinedrum", "Monomachine", "TM-1" and "TurboMIDI" are Elektron's names.
 
+## Download and install
+
+1. **Get the app.** Open this repository's **[Releases](https://github.com/lessavyfav/c2026/releases)** page (you need access to the repo) and download the latest `C2026-….zip`.
+2. **Unzip it** (double-click the zip in Downloads) and **drag `C2026` into your Applications folder**.
+3. **Approve it the first time you open it.** Until C2026 is signed with an Apple Developer ID, macOS blocks apps downloaded from the internet that Apple hasn't checked, and you'll see a message like *"Apple could not verify 'C2026' is free of malware"*. That's expected — approve it once and it opens normally from then on:
+
+   **macOS 15 Sequoia and later (including macOS 26)**
+   1. Double-click C2026. When the warning appears, click **Done** (not *Move to Trash*).
+   2. Open **System Settings → Privacy & Security** and scroll down to the **Security** section.
+   3. Next to *"C2026 was blocked to protect your Mac"*, click **Open Anyway**, then confirm with your password or Touch ID.
+   4. Click **Open** in the final dialog.
+
+   **macOS 13 Ventura and macOS 14 Sonoma**
+   1. In Applications, **Control-click** (or right-click) C2026 and choose **Open**.
+   2. Click **Open** in the dialog.
+
+   **Or, from Terminal** (any version): `xattr -dr com.apple.quarantine /Applications/C2026.app`
+
+4. **Connect your TM-1** (and its MIDI In/Out to your Machinedrum) and open C2026. It finds the TM-1 by itself and shows *Turbo* with the negotiated speed.
+
+Requires macOS 13 or later; runs natively on Apple Silicon and Intel Macs. Signed and notarized releases (no approval step) are on the way.
+
 ---
 
 ## 1. Fundamental updates to the original C6
