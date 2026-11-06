@@ -67,7 +67,32 @@ enum PreviewRenderer {
             .environment(\.colorScheme, dark ? .dark : .light)
         }
         save(VStack(spacing: 0) { list(false); list(true) }, dir.appendingPathComponent("rows-preview.png"))
+
+        // "Send to slot" with and without a sample selected. Real controls, so drawn by AppKit.
+        func slotField(_ dark: Bool, _ samples: Bool) -> some View {
+            SlotField(slot: .constant(46), slotCount: 48, samplesSelected: samples)
+                .padding(12).frame(width: 200, alignment: .leading)
+                .background(dark ? Color(white: 0.15) : Color.white)
+                .environment(\.colorScheme, dark ? .dark : .light)
+        }
+        saveLive(HStack(spacing: 0) { slotField(false, true); slotField(false, false); slotField(true, true); slotField(true, false) },
+                 dir.appendingPathComponent("slot-field-preview.png"))
         exit(0)
+    }
+
+    /// Like `save`, for views with real controls (which ImageRenderer leaves out): hosts the view
+    /// in an offscreen window and has AppKit draw it.
+    @MainActor static func saveLive(_ view: some View, _ url: URL) {
+        let host = NSHostingView(rootView: view)
+        host.frame = CGRect(origin: .zero, size: host.fittingSize)
+        let window = NSWindow(contentRect: host.frame, styleMask: .borderless, backing: .buffered, defer: false)
+        window.contentView = host
+        host.layoutSubtreeIfNeeded()
+        host.display()
+        if let rep = host.bitmapImageRepForCachingDisplay(in: host.bounds) {
+            host.cacheDisplay(in: host.bounds, to: rep)
+            try? rep.representation(using: .png, properties: [:])?.write(to: url)
+        }
     }
 
     @MainActor static func save(_ view: some View, _ url: URL) {

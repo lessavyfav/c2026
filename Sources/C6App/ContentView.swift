@@ -184,13 +184,8 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Connection").font(.caption).foregroundStyle(.secondary)
                 Text(model.connectionDescription).lineLimit(1)
-                Text("Send to slot").font(.caption).foregroundStyle(.secondary).padding(.top, 4)
-                HStack(spacing: 4) {
-                    TextField("1", value: $model.targetSlot, format: .number).frame(width: 50)
-                    Stepper("", value: $model.targetSlot, in: 1...max(1, model.settings.sampleSlots)).labelsHidden()
-                    Text("SDS #\(model.samplePosition)").foregroundStyle(.tertiary).font(.caption)
-                }
-                .help("Slot for the next sample, numbered as on the device (the Machinedrum's slots start at 1). Several samples sent together fill the following slots; this number stays put. The sample dump itself carries the number minus one (SDS #). Note: the Machinedrum stores a dump in that slot even when it isn't armed to receive.")
+                SlotField(slot: $model.targetSlot, slotCount: model.settings.sampleSlots,
+                          samplesSelected: model.selectedItems.contains(where: \.isAudio))
             }
             .frame(width: 200, alignment: .leading)
         }
@@ -316,6 +311,29 @@ struct ContentView: View {
             if item.isAudio && url.pathExtension.lowercased() == "syx" { model.saveAsSampleDump(item: item, to: url) }
             else { model.save(item: item, to: url) }
         }
+    }
+}
+
+/// "Send to slot". Only samples (WAV / AIFF) use it, so it greys out when none are selected:
+/// kits, patterns, songs, globals and .syx files go where their own data says.
+struct SlotField: View {
+    @Binding var slot: Int
+    let slotCount: Int
+    let samplesSelected: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Send to slot").font(.caption).foregroundStyle(samplesSelected ? .secondary : .tertiary).padding(.top, 4)
+            HStack(spacing: 4) {
+                TextField("1", value: $slot, format: .number).frame(width: 50)
+                Stepper("", value: $slot, in: 1...max(1, slotCount)).labelsHidden()
+                Text("SDS #\(slot - 1)").foregroundStyle(.tertiary).font(.caption)
+            }
+            .disabled(!samplesSelected)
+        }
+        .help(samplesSelected
+              ? "Slot for the next sample, numbered as on the device (the Machinedrum's slots start at 1). Several samples sent together fill the following slots; this number stays put. The sample dump itself carries the number minus one (SDS #). Note: the Machinedrum stores a dump in that slot even when it isn't armed to receive."
+              : "Only used for samples (WAV / AIFF). Select one to choose its slot. Kits, patterns, songs, globals and .syx files go where their own data says.")
     }
 }
 
